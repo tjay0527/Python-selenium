@@ -24,10 +24,13 @@ time.sleep(2)
 
 # Verify new page URL contains practicetestautomation.com/logged-in-successfully/
 actual_url = driver.current_url
+assert actual_url == "https://practicetestautomation.com/logged-in-successfully/"
 
 # Verify new page contains expected text ('Congratulations' or 'successfully logged in')
 text_locator = driver.find_element(By.TAG_NAME, "h1")
 actual_text = text_locator.text
+assert actual_text == "Logged In Successfully"
 
 # Verify button Log out is displayed on the new page
 log_out_button_locator = driver.find_element(By.LINK_TEXT, "Log out")
+assert log_out_button_locator.is_displayed()
