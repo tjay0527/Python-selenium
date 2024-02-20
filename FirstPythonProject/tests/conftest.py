@@ -2,10 +2,11 @@ import pytest
 from selenium import webdriver
 
 
-@pytest.fixture(params=["chrome", "edge"])
+@pytest.fixture()
+# @pytest.fixture(params=["chrome", "edge"])
 def driver(request):
-    # browser = request.config.getoption("--browser")
-    browser = request.param
+    browser = request.config.getoption("--browser")
+    # browser = request.param // use along with params in fixture
     print(f"Creating {browser} driver")
     if browser == "chrome":
         my_driver = webdriver.Chrome()
@@ -13,7 +14,7 @@ def driver(request):
         my_driver = webdriver.Edge()
     else:
         raise TypeError(f"Expected 'chrome' or 'edge', but got {browser}")
-    my_driver.implicitly_wait(10)
+    # my_driver.implicitly_wait(10)
     yield my_driver
     print(f"Closing {browser} driver")
     my_driver.quit()
