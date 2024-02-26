@@ -80,9 +80,27 @@ class TestExceptions:
 
         # Push add button
         add_button_locator = driver.find_element(By.ID, "add_btn")
-        # add_button_locator.click()
+        add_button_locator.click()
 
         # Verify instruction text element is no longer displayed
         wait = WebDriverWait(driver, 10)
         assert wait.until(ec.invisibility_of_element_located(
             (By.ID, "instructions")), "Instruction text element should not be displayed ")
+
+    @pytest.mark.exceptions
+    @pytest.mark.debug
+    def test_timeout_exception(self, driver):
+        # Open page
+        driver.get("https://practicetestautomation.com/practice-test-exceptions/")
+
+        # Click Add button
+        add_button_locator = driver.find_element(By.ID, "add_btn")
+        add_button_locator.click()
+
+        # Wait for 3 seconds for the second input field to be displayed
+        wait = WebDriverWait(driver, 6)
+        row_2_input_element = wait.until(ec.visibility_of_element_located((By.XPATH, "//div[@id='row2']/input")),
+                                         "Failed waiting for Row 2 input to be visible")
+
+        # Verify second input field is displayed
+        assert row_2_input_element.is_displayed(), "Row 2 input should be displayed, but it's not"
